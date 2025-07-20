@@ -6,7 +6,18 @@
 ## 
 ## Description:
 ## This script calculates and visualizes the implied volatility surface for 
-## options using the Black-Scholes model.
+## options using the Black-Scholes model. It allows users to input parameters
+## such as ticker symbol, risk-free rate, dividend yield, time to expiration,
+## and strike price range. The surface plot shows how implied volatility varies
+## with time to expiration and strike price (or moneyness).
+##
+## Dependencies:
+## - yfinance: For fetching financial data from Yahoo Finance.
+## - pandas: For data manipulation and analysis.
+## - numpy: For numerical operations.
+## - scipy: For scientific computing, including optimization and interpolation.
+## - streamlit: For creating the web application interface.
+## - plotly: For interactive plotting of the implied volatility surface.
 ##==============================================================================
 
 ## Import necessary libraries
@@ -19,6 +30,15 @@ from scipy.stats import norm
 from scipy.optimize import brentq
 from scipy.interpolate import griddata
 import plotly.graph_objects as go
+
+
+##===============================================================================
+##===============================================================================
+## Function Definitions
+## This section contains the function definitions for calculating the call option
+## prices using the Black-Scholes formula, calculating implied volatility, 
+## retrieving and processing options data.
+##===============================================================================
 
 ##===============================================================================
 ## bs_call_price
@@ -41,6 +61,7 @@ def bs_call_price(S, K, T, r, sigma, q=0):
     call_price = (S * np.exp(-q * T) * norm.cdf(d1) -
                   K * np.exp(-r * T) * norm.cdf(d2))
     return call_price
+
 
 ##===============================================================================
 ## implied_volatility
@@ -68,6 +89,7 @@ def implied_volatility(price, S, K, T, r, q=0):
         implied_vol = np.nan
 
     return implied_vol
+
 
 ##===============================================================================
 ## get_dividend_yield
@@ -260,15 +282,20 @@ def finalize_options_data(options_df, spot_price, risk_free_rate, dividend_yield
 
 
 ##===============================================================================
+##===============================================================================
 ## Streamlit Application Setup
 ## This section sets up the Streamlit application, including the title, sidebar,
-## and main content. It allows users to input parameters for the Black-Scholes model
-## and visualizes the implied volatility surface.
+## and main content. It allows users to input parameters for the Black-Scholes 
+## model and visualizes the implied volatility surface.
 ##===============================================================================
 
+##===============================================================================
+## Application title and description
+## This section sets the title and description of the Streamlit application.
+##===============================================================================
 st.title("📊 Implied Volatility Surface")
 linkedin_url = "https://www.linkedin.com/in/anthony-hn-le/"
-st.markdown(f'`Created by: ` <a href="{linkedin_url}" target="_blank" style="text-decoration: none; color: inherit;"><img src="https://cdn-icons-png.flaticon.com/512/174/174857.png" width="25" height="25" style="vertical-align: middle; margin-right: 10px;">`Anthony Le`</a>', unsafe_allow_html=True)
+st.markdown(f'`Created by:` <a href="{linkedin_url}" target="_blank" style="text-decoration: none; color: inherit;"> <img src="https://cdn-icons-png.flaticon.com/512/174/174857.png" width="25" height="25" style="vertical-align: middle; margin-right: 10px; margin-left: 10px;">`Anthony Le`</a>', unsafe_allow_html=True)
 
 st.set_page_config(
     layout="wide",
@@ -332,9 +359,9 @@ with st.sidebar:
 
 
 ##===============================================================================
-## Main logic to fetch options data and calculate implied volatility surface
-## This section retrieves options data for the specified ticker symbol and
-## calculates the implied volatility surface using the Black-Scholes model.
+## Main content
+## This section retrieves the options data, processes it, and visualizes the
+## implied volatility surface using Plotly.
 ##===============================================================================
 
 ticker = yf.Ticker(ticker_symbol)
@@ -426,6 +453,7 @@ fig.update_layout(
 st.plotly_chart(fig)
 
 st.divider() 
+
 
 ##===============================================================================
 ## End of the application
