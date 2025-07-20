@@ -264,11 +264,8 @@ def finalize_options_data(options_df, spot_price, risk_free_rate, dividend_yield
 ## This section allows users to input parameters for the Black-Scholes model.
 ##===============================================================================
 with st.sidebar:
-    st.title("📊 Implied Volatility Surface")
-    st.write("`Created by:`")
-    linkedin_url = "https://www.linkedin.com/in/anthony-hn-le/"
-    st.markdown(f'<a href="{linkedin_url}" target="_blank" style="text-decoration: none; color: inherit;"><img src="https://cdn-icons-png.flaticon.com/512/174/174857.png" width="25" height="25" style="vertical-align: middle; margin-right: 10px;">`Anthony Le`</a>', unsafe_allow_html=True)
-
+    st.title("Model Parameters")
+    
     ticker_symbol = st.text_input(
         'Ticker Symbol',
         value='SPY',
@@ -340,7 +337,20 @@ options_df = finalize_options_data(options_df, spot_price, risk_free_rate, divid
 ## Plotting the Implied Volatility Surface
 ## This section uses Plotly to create a 3D surface plot of the implied volatility.
 ##=================================================================================
-st.title('Implied Volatility Surface')
+st.title("📊 Implied Volatility Surface")
+linkedin_url = "https://www.linkedin.com/in/anthony-hn-le/"
+st.markdown(f'`Created by:` <a href="{linkedin_url}" target="_blank" style="text-decoration: none; color: inherit;"><img src="https://cdn-icons-png.flaticon.com/512/174/174857.png" width="25" height="25" style="vertical-align: middle; margin-right: 10px;">`Anthony Le`</a>', unsafe_allow_html=True)
+
+st.set_page_config(
+    layout="wide",
+    initial_sidebar_state="expanded")
+
+st.write(
+    """This application calculates and visualizes the implied volatility surface 
+    for options using the Black-Scholes model. You can choose a ticker symbol and 
+    set the risk-free rate, dividend yield, time to expiration, and strike price
+    range. The surface plot will show how implied volatility varies with time to
+    expiration and strike price (or moneyness). """)
 
 ## Report the ticker, spot price, dividend yield and risk-free rate
 col1, col2, col3, col4 = st.columns(4, border=True)
@@ -358,6 +368,12 @@ with col4:
     st.subheader('Risk-Free Rate', divider=True)
     st.markdown(f"**{risk_free_rate:.2%}**")
 
+st.info("""
+    Note: By default, the risk-free rate is set to the current yield of the
+    13-week Treasury bill (IRX), while the dividend yield is latest yield of the
+    underlying asset. Both values are automatically fetched from Yahoo Finance. """)
+
+st.divider() 
 
 ## Set up the plotly surface chart
 if y_axis_option == 'Strike Price ($)':
@@ -393,8 +409,10 @@ fig.update_layout(
     ),
     autosize=False,
     width=1200,
-    height=1000,
-    margin=dict(l=65, r=50, b=65, t=90)
+    height=700,
+    margin=dict(l=30, r=30, b=60, t=30)
 )
 
 st.plotly_chart(fig)
+
+st.divider() 
