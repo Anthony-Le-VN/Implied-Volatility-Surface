@@ -260,6 +260,29 @@ def finalize_options_data(options_df, spot_price, risk_free_rate, dividend_yield
 
 
 ##===============================================================================
+## Streamlit Application Setup
+## This section sets up the Streamlit application, including the title, sidebar,
+## and main content. It allows users to input parameters for the Black-Scholes model
+## and visualizes the implied volatility surface.
+##===============================================================================
+
+st.title("📊 Implied Volatility Surface")
+linkedin_url = "https://www.linkedin.com/in/anthony-hn-le/"
+st.markdown(f'`Created by: ` <a href="{linkedin_url}" target="_blank" style="text-decoration: none; color: inherit;"><img src="https://cdn-icons-png.flaticon.com/512/174/174857.png" width="25" height="25" style="vertical-align: middle; margin-right: 10px;">`Anthony Le`</a>', unsafe_allow_html=True)
+
+st.set_page_config(
+    layout="wide",
+    initial_sidebar_state="expanded")
+
+st.write(
+    """This application calculates and visualizes the implied volatility surface 
+    for options using the Black-Scholes model. You can choose a ticker symbol and 
+    set the risk-free rate, dividend yield, time to expiration, and strike price
+    range. The surface plot will show how implied volatility varies with time to
+    expiration and strike price (or moneyness). """)
+
+
+##===============================================================================
 ## Sidebar for user inputs
 ## This section allows users to input parameters for the Black-Scholes model.
 ##===============================================================================
@@ -334,23 +357,10 @@ options_df = finalize_options_data(options_df, spot_price, risk_free_rate, divid
 
 
 ##================================================================================
-## Plotting the Implied Volatility Surface
-## This section uses Plotly to create a 3D surface plot of the implied volatility.
+## Reporting & Visualization
+## This section displays the ticker information and visualizes the implied
+## volatility surface using Plotly.
 ##=================================================================================
-st.title("📊 Implied Volatility Surface")
-linkedin_url = "https://www.linkedin.com/in/anthony-hn-le/"
-st.markdown(f'`Created by: ` <a href="{linkedin_url}" target="_blank" style="text-decoration: none; color: inherit;"><img src="https://cdn-icons-png.flaticon.com/512/174/174857.png" width="25" height="25" style="vertical-align: middle; margin-right: 10px;">`Anthony Le`</a>', unsafe_allow_html=True)
-
-st.set_page_config(
-    layout="wide",
-    initial_sidebar_state="expanded")
-
-st.write(
-    """This application calculates and visualizes the implied volatility surface 
-    for options using the Black-Scholes model. You can choose a ticker symbol and 
-    set the risk-free rate, dividend yield, time to expiration, and strike price
-    range. The surface plot will show how implied volatility varies with time to
-    expiration and strike price (or moneyness). """)
 
 ## Report the ticker, spot price, dividend yield and risk-free rate
 col1, col2, col3, col4 = st.columns(4, border=True)
