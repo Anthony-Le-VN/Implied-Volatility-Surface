@@ -273,14 +273,14 @@ with st.sidebar:
     ).upper()
 
     risk_free_rate = st.number_input(
-        'Risk-Free Rate (e.g., 0.015 for 1.5%)',
+        'Risk-Free Rate (e.g., 0.0425 for 4.25%)',
         value= yf.Ticker("^IRX").info['regularMarketPrice'] / 100,
         step=0.001,
         format="%.4f"
     )
 
     dividend_yield = st.number_input(
-        'Dividend Yield (e.g., 0.013 for 1.3%)',
+        'Dividend Yield (e.g., 0.0615 for 6.15%)',
         value= get_dividend_yield(ticker_symbol),
         format="%.4f"
     )
@@ -339,7 +339,7 @@ options_df = finalize_options_data(options_df, spot_price, risk_free_rate, divid
 ##=================================================================================
 st.title("📊 Implied Volatility Surface")
 linkedin_url = "https://www.linkedin.com/in/anthony-hn-le/"
-st.markdown(f'`Created by:` <a href="{linkedin_url}" target="_blank" style="text-decoration: none; color: inherit;"><img src="https://cdn-icons-png.flaticon.com/512/174/174857.png" width="25" height="25" style="vertical-align: middle; margin-right: 10px;">`Anthony Le`</a>', unsafe_allow_html=True)
+st.markdown(f'`Created by: ` <a href="{linkedin_url}" target="_blank" style="text-decoration: none; color: inherit;"><img src="https://cdn-icons-png.flaticon.com/512/174/174857.png" width="25" height="25" style="vertical-align: middle; margin-right: 10px;">`Anthony Le`</a>', unsafe_allow_html=True)
 
 st.set_page_config(
     layout="wide",
@@ -416,3 +416,7 @@ fig.update_layout(
 st.plotly_chart(fig)
 
 st.divider() 
+
+##===============================================================================
+## End of the application
+##===============================================================================
