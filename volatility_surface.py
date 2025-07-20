@@ -346,14 +346,17 @@ st.title('Implied Volatility Surface')
 col1, col2, col3, col4 = st.columns(4, border=True)
 
 with col1:
-    st.markdown(f"### Ticker: **{ticker_symbol}**")
-
+    st.subheader('Ticker', divider=True)
+    st.markdown(f"**{ticker_symbol}**")
 with col2:
-    st.markdown(f"### Spot Price: **${spot_price:.2f}**")
+    st.subheader('Spot Price', divider=True)
+    st.markdown(f"**${spot_price:.2f}**")
 with col3:
-    st.markdown(f"### Dividend Yield: **{dividend_yield:.2%}**")
+    st.subheader('Dividend Yield', divider=True)
+    st.markdown(f"**{dividend_yield:.2%}**")
 with col4:
-    st.markdown(f"### Risk-Free Rate: **{risk_free_rate:.2%}**")
+    st.subheader('Risk-Free Rate', divider=True)
+    st.markdown(f"**{risk_free_rate:.2%}**")
 
 
 ## Set up the plotly surface chart
@@ -389,8 +392,8 @@ fig.update_layout(
         zaxis_title='Implied Volatility (%)'
     ),
     autosize=False,
-    width=900,
-    height=800,
+    width=1200,
+    height=1000,
     margin=dict(l=65, r=50, b=65, t=90)
 )
 
