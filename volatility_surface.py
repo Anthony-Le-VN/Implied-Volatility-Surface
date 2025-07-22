@@ -168,8 +168,7 @@ def get_valid_expiration_dates(ticker, time_min, time_max):
     # Filter expiration dates based on user input
     valid_dates = [
         pd.Timestamp(date) for date in expirations
-        if (pd.Timestamp(date) > today + timedelta(days=1)) and
-           (pd.Timestamp(date) >= today + timedelta(days=365 * time_min)) and
+        if (pd.Timestamp(date) >= today + timedelta(days=365 * time_min)) and
            (pd.Timestamp(date) <= today + timedelta(days=365 * time_max))
     ]
 
@@ -346,12 +345,13 @@ with st.sidebar:
 
     min_strike_pct, max_strike_pct = st.slider(
         'Strike Price Range (% of Spot Price)',
-        min_value=50.0,
-        max_value=200.0,
-        value=(80.0, 120.0),
-        step=1.0,
+        min_value=50,
+        max_value=200,
+        value=(80, 120),
+        step=1,
         format="%.0f"
     )
+    
     y_axis_option = st.selectbox(
         'Select Y-axis:',
         ('Strike Price ($)', 'Moneyness')
