@@ -364,6 +364,9 @@ with st.sidebar:
 ## such as spot price, dividend yield, and risk-free rate.
 ##=================================================================================
 
+ticker = yf.Ticker(ticker_symbol)
+spot_price = get_spot_price(ticker_symbol)
+
 ## Report the ticker, spot price, dividend yield and risk-free rate
 col1, col2, col3, col4 = st.columns(4, border=True)
 
@@ -393,10 +396,7 @@ st.divider()
 ## implied volatility surface using Plotly.
 ##===============================================================================
 
-ticker = yf.Ticker(ticker_symbol)
-
-spot_price = get_spot_price(ticker_symbol)
-
+# Retrieve and process options data to calculate the implied volatility surface
 exp_dates = get_valid_expiration_dates(ticker, time_min, time_max)
 if not exp_dates:
     st.error('Please check your inputs and try again.')
