@@ -358,35 +358,10 @@ with st.sidebar:
     )
 
 
-##===============================================================================
-## Main content
-## This section retrieves the options data, processes it, and visualizes the
-## implied volatility surface using Plotly.
-##===============================================================================
-
-ticker = yf.Ticker(ticker_symbol)
-
-spot_price = get_spot_price(ticker_symbol)
-
-exp_dates = get_valid_expiration_dates(ticker, time_min, time_max)
-if not exp_dates:
-    st.error('Please check your inputs and try again.')
-    st.stop()
-
-option_data = fetch_option_data(ticker, exp_dates)
-
-options_df = process_options_data(option_data, spot_price, min_strike_pct, max_strike_pct)
-if options_df.empty:
-    st.error('No option data available after processing. Please try again.')
-    st.stop()
-
-options_df = finalize_options_data(options_df, spot_price, risk_free_rate, dividend_yield)
-
-
 ##================================================================================
-## Reporting & Visualization
-## This section displays the ticker information and visualizes the implied
-## volatility surface using Plotly.
+## Reporting 
+## This section displays the ticker information and other basic parameters, 
+## such as spot price, dividend yield, and risk-free rate.
 ##=================================================================================
 
 ## Report the ticker, spot price, dividend yield and risk-free rate
@@ -411,6 +386,31 @@ st.info("""
     underlying asset. Both values are automatically fetched from Yahoo Finance. """)
 
 st.divider() 
+
+##===============================================================================
+## Main content
+## This section retrieves the options data, processes it, and visualizes the
+## implied volatility surface using Plotly.
+##===============================================================================
+
+ticker = yf.Ticker(ticker_symbol)
+
+spot_price = get_spot_price(ticker_symbol)
+
+exp_dates = get_valid_expiration_dates(ticker, time_min, time_max)
+if not exp_dates:
+    st.error('Please check your inputs and try again.')
+    st.stop()
+
+option_data = fetch_option_data(ticker, exp_dates)
+
+options_df = process_options_data(option_data, spot_price, min_strike_pct, max_strike_pct)
+if options_df.empty:
+    st.error('No option data available after processing. Please try again.')
+    st.stop()
+
+options_df = finalize_options_data(options_df, spot_price, risk_free_rate, dividend_yield)
+
 
 ## Set up the plotly surface chart
 if y_axis_option == 'Strike Price ($)':
