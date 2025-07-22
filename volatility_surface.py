@@ -406,7 +406,7 @@ option_data = fetch_option_data(ticker, exp_dates)
 
 options_df = process_options_data(option_data, spot_price, min_strike_pct, max_strike_pct)
 if options_df.empty:
-    st.error('No option data available after processing. Please try again.')
+    st.error('No option data available at this time due to market hours. Please try again later.')
     st.stop()
 
 options_df = finalize_options_data(options_df, spot_price, risk_free_rate, dividend_yield)
@@ -453,6 +453,23 @@ fig.update_layout(
 st.plotly_chart(fig)
 
 st.divider() 
+
+st.write("""
+    **Acknowledgements**: This project was inspired by the recommendation of 
+    [Coding Jesus](https://www.youtube.com/@CodingJesus) on YouTube and the work of
+    [Mateusz Jastrzębski](https://www.linkedin.com/in/mateusz-jastrz%C4%99bski-8a2622264/).
+    
+    **Disclaimer**: This application is for educational purposes only and does not
+    constitute financial advice. The implied volatility surface is calculated using
+    the Black-Scholes model, which has limitations and assumptions that may not hold
+    true in all market conditions. Always conduct your own research and consult with
+    a financial advisor before making investment decisions.
+         
+    **Feedback**: If you have any suggestions or feedback, please feel free to
+    reach out to me on [LinkedIn](https://www.linkedin.com/in/anthony-hn-le/).
+    Thank you for using this application! I hope you find it useful in your options
+    trading and analysis. Happy trading! 😊
+""")
 
 
 ##===============================================================================
