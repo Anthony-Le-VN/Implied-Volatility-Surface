@@ -322,16 +322,14 @@ with st.sidebar:
     ).upper()
 
     risk_free_rate = st.number_input(
-        '''Risk-Free Rate (e.g., 0.0425 for 4.25%)
-        (Real-time data from Yahoo Finance by default)''',
+        'Risk-Free Rate (e.g., 0.0425 for 4.25%)',
         value= yf.Ticker("^IRX").info['regularMarketPrice'] / 100,
         step=0.001,
         format="%.4f"
     )
 
     dividend_yield = st.number_input(
-        '''Dividend Yield (e.g., 0.0615 for 6.15%)
-        (Real-time data from Yahoo Finance by default)''',
+        'Dividend Yield (e.g., 0.0615 for 6.15%)',
         value= get_dividend_yield(ticker_symbol),
         format="%.4f"
     )
